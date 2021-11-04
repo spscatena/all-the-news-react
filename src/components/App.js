@@ -13,17 +13,6 @@ function App() {
   const [section, setSection] = React.useState("arts");
 
   React.useEffect(() => {
-    const url = new URL(window.location.href);
-    const hash = url.hash.slice(1);
-    if (hash !== "undefined") {
-      console.log(" hash ", hash);
-      setSection(hash);
-    } else {
-      setSection("arts");
-    }
-  }, []);
-
-  React.useEffect(() => {
     setLoading(true);
     fetch(
       `https://api.nytimes.com/svc/topstories/v2/${section}.json?api-key=${nytapi}`
@@ -39,11 +28,11 @@ function App() {
   return (
     <>
       <Header siteTitle="All the News that Fits We Print" />
-      <Nav navItems={navItems} setSection={setSection} section={section} />
+      <Nav navItems={navItems} />
       {loading || stories.length === 0 ? (
         <h2>Loading...</h2>
       ) : (
-        <Stories stories={stories} section={section} />
+        <Stories stories={stories} />
       )}
     </>
   );
